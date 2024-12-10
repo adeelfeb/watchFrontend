@@ -110,8 +110,9 @@ class VideoService {
               withCredentials: false, // No need to send cookies with this request
             }
           );
+          console.log("The api response was:", response.data.data)
     
-          return response.data; // Return the summary data
+          return response; // Return the summary data
         } catch (error) {
           console.error('Error fetching summary:', error);
           throw new Error(error.response ? error.response.data.message : error.message); // Propagate the error

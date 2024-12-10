@@ -1,10 +1,10 @@
 import React from 'react'
 
-function KeyConcepts(data) {
-    
+function KeyConcepts({response}) {
+    console.log("The keyconept page:", response)
   return (
     <div>
-      Keyconcept
+      {"response"}
     </div>
   )
 }

@@ -42,69 +42,70 @@ function Dashboard() {
 
   return (
     <div className="flex flex-row min-h-[calc(100vh-64px)] p-2">
-      {/* Left Sidebar */}
-      <div
-        className="w-full lg:w-1/6 bg-gray-50 p-2 shadow-md flex flex-col justify-between overflow-y-auto rounded-md mr-2"
-        style={{ paddingTop: "1rem" }}
-      >
-        <div>
-          <p className="text-xl font-semibold mb-4">
-            Welcome, {user.fullname || user.username}
-          </p>
+  {/* Left Sidebar */}
+  <div
+    className="flex-shrink-0 bg-gray-50 p-2 shadow-md flex flex-col justify-between rounded-md mr-2"
+    style={{ width: 'fit-content', maxWidth: '100%' }} // Dynamically adjust based on content
+  >
+    <div>
+      <p className="text-xl font-semibold mb-4">
+        Welcome, {user.fullname || user.username}
+      </p>
 
-          <div className="flex flex-col space-y-4">
-            <button
-              onClick={() => setActivePage("inputURL")}
-              className={`px-4 py-2 rounded-lg border transition-colors ${
-                activePage === "inputURL"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              Input URL
-            </button>
-            <button
-              onClick={handleHistoryClick}
-              className={`px-4 py-2 rounded-lg border transition-colors ${
-                activePage === "history"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              {historyIsLoading ? "Loading..." : "History"}
-            </button>
-            <button
-              onClick={() => setActivePage("settings")}
-              className={`px-4 py-2 rounded-lg border transition-colors ${
-                activePage === "settings"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              Settings
-            </button>
-          </div>
-        </div>
-
+      <div className="flex flex-col space-y-4">
         <button
-          onClick={logoutHandler}
-          className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 mt-4"
+          onClick={() => setActivePage("inputURL")}
+          className={`px-4 py-2 rounded-lg border transition-colors ${
+            activePage === "inputURL"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
         >
-          Logout
+          Input URL
+        </button>
+        <button
+          onClick={handleHistoryClick}
+          className={`px-4 py-2 rounded-lg border transition-colors ${
+            activePage === "history"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          {historyIsLoading ? "Loading..." : "History"}
+        </button>
+        <button
+          onClick={() => setActivePage("settings")}
+          className={`px-4 py-2 rounded-lg border transition-colors ${
+            activePage === "settings"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          Settings
         </button>
       </div>
-
-      {/* Right Content */}
-      <div className="flex-grow p-6 bg-white border border-gray-300 rounded-lg shadow-md min-h-0">
-        {activePage === "inputURL" && <InputURL />}
-        {activePage === "history" && (
-          <div className="h-[calc(100vh-125px)] overflow-y-auto"> {/* Set height and scroll if content overflows */}
-            <UserHistory data={userHistory} />
-          </div>)} {/* Pass history from Redux */}
-        
-        {activePage === 'settings' && <Settings />}
-      </div>
     </div>
+
+    <button
+      onClick={logoutHandler}
+      className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 mt-4"
+    >
+      Logout
+    </button>
+  </div>
+
+  {/* Right Content */}
+  <div className="flex-grow p-6 bg-white border border-gray-300 rounded-lg shadow-md min-h-0">
+    {activePage === "inputURL" && <InputURL />}
+    {activePage === "history" && (
+      <div className="h-[calc(100vh-125px)] overflow-y-auto">
+        <UserHistory data={userHistory} />
+      </div>
+    )}
+    {activePage === "settings" && <Settings />}
+  </div>
+</div>
+
   );
 }
 

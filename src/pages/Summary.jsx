@@ -16,9 +16,8 @@ const Summary = (data) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded-md shadow-md min-w-[250px] max-w-[80vw] mx-auto">
-  <h4 className="font-bold text-lg text-center mb-4">Video Summary</h4>
-  <div className="flex justify-center gap-4 mb-4">
+    <div className=" min-w-[250px] max-w-[80vw] mx-auto">
+  {/* <div className="flex justify-center gap-4 mb-4">
     <button
       className={`px-4 py-2 rounded ${
         selectedLanguage === "english" ? "bg-blue-500 text-white" : "bg-gray-200"
@@ -34,8 +33,8 @@ const Summary = (data) => {
     >
       Copy Summary
     </button>
-  </div>
-  <div className="bg-white p-4 rounded-md border">
+  </div> */}
+  <div className="bg-white p-2 rounded-md border">
     <p>
       <strong>{selectedLanguage === "english" ? "English" : "Original"} Summary:</strong>
     </p>
