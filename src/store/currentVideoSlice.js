@@ -4,7 +4,8 @@ const currentVideoSlice = createSlice({
   name: "currentVideo",
   initialState: {
     videoData: null,
-    userHistory: [], // Store the user's history
+    userHistory: [],
+    quizResponses: {}, // Store user responses
   },
   reducers: {
     setVideoData: (state, action) => {
@@ -14,13 +15,16 @@ const currentVideoSlice = createSlice({
       state.videoData = null;
     },
     setUserHistory: (state, action) => {
-      state.userHistory = action.payload; // Reverse the array when setting it
+      state.userHistory = action.payload;
     },
     clearUserHistory: (state) => {
-      state.userHistory = []; // Clear the history
+      state.userHistory = [];
     },
     addToUserHistory: (state, action) => {
-      state.userHistory.unshift(action.payload); // Add new video to the beginning
+      state.userHistory.unshift(action.payload);
+    },
+    saveQuizResponse: (state, action) => {
+      state.quizResponses = action.payload; // Save responses globally
     },
   },
 });
@@ -31,6 +35,7 @@ export const {
   setUserHistory,
   clearUserHistory,
   addToUserHistory,
+  saveQuizResponse,
 } = currentVideoSlice.actions;
 
 export default currentVideoSlice.reducer;

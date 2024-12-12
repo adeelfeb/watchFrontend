@@ -8,34 +8,93 @@ class VideoService {
     }
 
     
-    async addVideo(videoUrl) {
-        try {
-            const accessToken = localStorage.getItem('accessToken');
-            // console.log("Access Token is :", accessToken)
+    // async addVideo(videoUrl) {
+    //     try {
+    //         const accessToken = localStorage.getItem('accessToken');
+    //         // console.log("Access Token is :", accessToken)
 
-            if (!accessToken) {
-                console.log('No access token found in localStorage');
-                return null; // Return null if access token is not found
-            }
+    //         if (!accessToken) {
+    //             console.log('No access token found in localStorage');
+    //             return null; // Return null if access token is not found
+    //         }
             
-            const response = await axios.post(
-                `${this.apiUrl}/users/addVideo`, // API endpoint for adding the video
-                { videoUrl }, // Send the video URL in the request body
-                {
-                    headers: {
-                        "Authorization": `Bearer ${accessToken}`, // Attach the access token in the Authorization header
-                    },
-                    withCredentials: false, // No need to send cookies with this request
-                }
-            );
+    //         const response = await axios.post(
+    //             `${this.apiUrl}/users/addVideo`, // API endpoint for adding the video
+    //             { videoUrl }, // Send the video URL in the request body
+    //             {
+    //                 headers: {
+    //                     "Authorization": `Bearer ${accessToken}`, // Attach the access token in the Authorization header
+    //                 },
+    //                 withCredentials: false, // No need to send cookies with this request
+    //             }
+    //         );
 
-            return response.data; // Return the response data (e.g., success message or video data)
-        } catch (error) {
-            console.error('Error adding video to watch history:', error);
-            throw new Error(error.response ? error.response.data.message : error.message); // Propagate the error
-        }
-    }
+    //         return response.data; // Return the response data (e.g., success message or video data)
+    //     } catch (error) {
+    //         console.error('Error adding video to watch history:', error);
+    //         throw new Error(error.response ? error.response.data.message : error.message); // Propagate the error
+    //     }
+    // }
 
+    async addVideo(videoUrl) {
+      try {
+          const accessToken = localStorage.getItem('accessToken');
+  
+          if (!accessToken) {
+              console.error('No access token found in localStorage');
+              return { status: 401, message: 'Unauthorized: No access token found' }; // Return error object
+          }
+          
+          const response = await axios.post(
+              `${this.apiUrl}/users/addVideo`, // API endpoint for adding the video
+              { videoUrl }, // Send the video URL in the request body
+              {
+                  headers: {
+                      "Authorization": `Bearer ${accessToken}`, // Attach the access token in the Authorization header
+                  },
+                  withCredentials: false, // No need to send cookies with this request
+              }
+          );
+  
+          console.log('Server Response:', response.data); // Log the response from the server
+          return response.data; // Return the response data (e.g., success message or video data)
+      } catch (error) {
+          console.error('Error adding video to watch history:', error);
+          
+          if (error.response) {
+              // Handle specific status codes
+              const { status, data } = error.response;
+              console.log('Server Error Response:', data); // Log the error response from the server
+  
+              // Handle error with new structure
+              if (data && data.statusCode && data.messsage) {
+                  return {
+                      status: data.statusCode,
+                      message: data.messsage,
+                      success: data.success,
+                  };
+              }
+  
+              switch (status) {
+                  case 400:
+                      return { status, message: data.message || 'Bad Request' };
+                  case 404:
+                      return { status, message: data.message || 'Resource Not Found' };
+                  case 502:
+                      return { status, message: 'Bad Gateway: Unable to connect to the external API' };
+                  case 500:
+                      return { status, message: 'Internal Server Error: Please try again later' };
+                  default:
+                      return { status, message: data.message || 'An unexpected error occurred' };
+              }
+          } else {
+              console.log('Unknown Error:', error.message); // Log unknown errors
+              return { status: 500, message: error.message || 'An unknown error occurred' };
+          }
+      }
+  }
+  
+  
     
     async getTranscript(videoId) {
         try {
@@ -163,32 +222,72 @@ class VideoService {
         }
     }
       
+      // async getUserHistory() {
+      //   try {
+      //     const accessToken = localStorage.getItem('accessToken');
+      //     if (!accessToken) {
+      //       console.log('No access token found in localStorage');
+      //       return null; // Return null if access token is not found
+      //     }
+    
+      //     const response = await axios.get(
+      //       `${this.apiUrl}/users/history`, // API endpoint for getting the summary
+      //       {
+      //         headers: {
+      //           "Authorization": `Bearer ${accessToken}`, // Attach the access token in the Authorization header
+      //         },
+      //         withCredentials: false, // No need to send cookies with this request
+      //       }
+      //     );
+    
+      //     return response.data; // Return the summary data
+      //   } catch (error) {
+      //     console.error('Error fetching Qnas:', error);
+      //     throw new Error(error.response ? error.response.data.message : error.message); // Propagate the error
+      //   }
+      // }
+
       async getUserHistory() {
         try {
-          const accessToken = localStorage.getItem('accessToken');
-          if (!accessToken) {
-            console.log('No access token found in localStorage');
-            return null; // Return null if access token is not found
-          }
-    
-          const response = await axios.get(
-            `${this.apiUrl}/users/history`, // API endpoint for getting the summary
-            {
-              headers: {
-                "Authorization": `Bearer ${accessToken}`, // Attach the access token in the Authorization header
-              },
-              withCredentials: false, // No need to send cookies with this request
+            const accessToken = localStorage.getItem('accessToken');
+            if (!accessToken) {
+                console.error('No access token found in localStorage');
+                return { status: 401, message: 'Unauthorized: No access token found', success: false };
             }
-          );
     
-          return response.data; // Return the summary data
+            const response = await axios.get(
+                `${this.apiUrl}/users/history`, // API endpoint for getting the history
+                {
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`, // Attach the access token in the Authorization header
+                    },
+                    withCredentials: false, // No need to send cookies with this request
+                }
+            );
+    
+            console.log('Server Response:', response.data); // Log response for debugging
+            return response.data; // Return the full response
         } catch (error) {
-          console.error('Error fetching Qnas:', error);
-          throw new Error(error.response ? error.response.data.message : error.message); // Propagate the error
+            console.error('Error fetching user history:', error);
+    
+            if (error.response) {
+                const { status, data } = error.response;
+                console.log('Server Error Response:', data); // Log server response
+    
+                return {
+                    status: data.statusCode || status,
+                    message: data.message || data.messsage || 'An unexpected error occurred',
+                    success: data.success || false,
+                };
+            } else {
+                console.error('Unknown Error:', error.message);
+                return { status: 500, message: error.message || 'An unknown error occurred', success: false };
+            }
         }
-      }
+    }
+    
 
-      async changeCurrentPassword(oldPassword, newPassword) {
+    async changeCurrentPassword(oldPassword, newPassword) {
         try {
             console.log("Passwords", oldPassword, newPassword)
           const accessToken = localStorage.getItem('accessToken');

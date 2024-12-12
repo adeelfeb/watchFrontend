@@ -59,7 +59,7 @@ const Transcript = ({ data }) => {
 
       <div
         className="overflow-y-auto  overflow-auto scrollbar-thin bg-white p-4 rounded-md shadow-inner w-full"
-        style={{ maxHeight: "400px" }}
+        // style={{ maxHeight: full }}
       >
         {view === "original" ? (
           <>

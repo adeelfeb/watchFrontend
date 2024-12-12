@@ -12,31 +12,62 @@ const InputURL = () => {
   const dispatch = useDispatch();
   const videoData = useSelector((state) => state.currentVideo.videoData); // Access Redux store
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const videoId = getYouTubeVideoId(url);
+  //   if (!videoId) {
+  //     setError("Please enter a valid YouTube video URL.");
+  //     dispatch(clearVideoData()); // Reset video data in Redux
+  //     return;
+  //   }
+
+  //   setError("");
+  //   setIsLoading(true);
+
+  //   try {
+  //     const response = await videoService.addVideo(url);
+  //     dispatch(setVideoData(response.data)); // Update Redux store
+  //   } catch (error) {
+  //     console.error("Error adding video:", error);
+  //     alert("Error adding video Duration should be less than 20 min")
+  //     dispatch(clearVideoData()); // Clear Redux state on error
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const videoId = getYouTubeVideoId(url);
     if (!videoId) {
       setError("Please enter a valid YouTube video URL.");
       dispatch(clearVideoData()); // Reset video data in Redux
       return;
     }
-
+  
     setError("");
     setIsLoading(true);
-
+  
     try {
       const response = await videoService.addVideo(url);
-      dispatch(setVideoData(response.data)); // Update Redux store
+  
+      if (response.status === 201) {
+        dispatch(setVideoData(response)); // Update Redux store with success response
+      } else {
+        setError(response.message); // Display error message
+        dispatch(clearVideoData()); // Clear Redux state on error
+      }
     } catch (error) {
-      console.error("Error adding video:", error);
-      alert("Error adding video Duration should be less than 20 min")
+      setError(error.message || "An unexpected error occurred.");
       dispatch(clearVideoData()); // Clear Redux state on error
     } finally {
       setIsLoading(false);
     }
   };
-
+  
   const getYouTubeVideoId = (url) => {
     const regex =
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^&\n]{11})/;

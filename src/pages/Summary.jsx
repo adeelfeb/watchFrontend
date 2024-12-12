@@ -17,15 +17,15 @@ const Summary = (data) => {
 
   return (
     <div className=" min-w-[250px] max-w-[80vw] mx-auto">
-  {/* <div className="flex justify-center gap-4 mb-4">
-    <button
+  <div className="flex  gap-4 mb-4">
+    {/* <button
       className={`px-4 py-2 rounded ${
         selectedLanguage === "english" ? "bg-blue-500 text-white" : "bg-gray-200"
       }`}
       onClick={() => setSelectedLanguage("english")}
     >
       English
-    </button>
+    </button> */}
     
     <button
       className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -33,7 +33,7 @@ const Summary = (data) => {
     >
       Copy Summary
     </button>
-  </div> */}
+  </div>
   <div className="bg-white p-2 rounded-md border">
     <p>
       <strong>{selectedLanguage === "english" ? "English" : "Original"} Summary:</strong>
