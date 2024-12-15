@@ -8,8 +8,8 @@ const Quiz = () => {
   // Sample quiz data
   const data = {
     shortQuestions: [
-      { question: "What is the capital of France?" },
-      { question: "Explain Newton's Second Law of Motion in one sentence." },
+      { question: "What is K-map?" },
+      { question: "Explain importance of k-map." },
     ],
     mcqs: [
       {
@@ -23,7 +23,7 @@ const Quiz = () => {
     ],
     fillInTheBlanks: [
       {
-        question: "The chemical formula of water is ___?",
+        question: "3 var k-map ___?",
         blank: "",
       },
       {
@@ -68,21 +68,11 @@ const Quiz = () => {
     dispatch(saveQuizResponse(responses));
 
     // Mock submission to a backend API
-    fetch("/api/submit-quiz", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(responses),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Quiz submitted successfully!");
-        console.log(data);
-      })
-      .catch((err) => console.error("Submission Error:", err));
+    alert()
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto">
+    <div className="p-6 bg-white rounded-lg shadow-lg  mx-auto">
       <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
         Take the Quiz!
       </h2>
