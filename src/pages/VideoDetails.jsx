@@ -266,7 +266,8 @@ const VideoDetails = ({ data }) => {
     setQuizIsLoading(false);
     setKeyConceptsIsLoading(false);
   }, [data]);
-
+  
+  
   const handleTranscriptClick = async () => {
     if (!data._id) {
       console.error("No videoId found.");
@@ -334,7 +335,7 @@ const VideoDetails = ({ data }) => {
 
     try {
       const keyConcepts = await videoService.getKeyConcepts(data._id);
-      console.log("The keyconcepts from the VideoDetails page:", keyConcepts.data.data);
+      // console.log("The keyconcepts from the VideoDetails page:", keyConcepts.data.data);
       setKeyConceptsData(keyConcepts.data.data);
       setSelectedSection("keyConcepts");
     } catch (error) {
