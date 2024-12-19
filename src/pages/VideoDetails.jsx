@@ -379,7 +379,7 @@ const VideoDetails = ({ data }) => {
           <p className="text-sm font-semibold text-gray-600 mb-2 truncate">
             Watched: {new Date(data.createdAt).toLocaleString()}
           </p>
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2 overflow-y-auto max-h-[200px]">
   <button
     onClick={handleTranscriptClick}
     className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
@@ -421,6 +421,59 @@ const VideoDetails = ({ data }) => {
     {quizIsLoading ? "Loading..." : "Take Quiz"}
   </button>
   
+  <button
+    onClick={handleCurrentScoreClick}
+    className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
+      selectedSection === "currentScore"
+        ? "bg-blue-500 text-white"
+        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105"
+    }`}
+  >
+    Current Score
+  </button>
+</div> */}
+
+<div className="flex flex-col gap-2 overflow-y-auto max-h-[200px]">
+  <button
+    onClick={handleTranscriptClick}
+    className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
+      selectedSection === "transcript"
+        ? "bg-blue-500 text-white"
+        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105"
+    }`}
+  >
+    {transcriptisLoading ? "Loading..." : "Transcript"}
+  </button>
+  <button
+    onClick={handleSummaryClick}
+    className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
+      selectedSection === "summary"
+        ? "bg-blue-500 text-white"
+        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105"
+    }`}
+  >
+    {summaryIsLoading ? "Loading..." : "Summary"}
+  </button>
+  <button
+    onClick={handleKeyConceptsClick}
+    className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
+      selectedSection === "keyConcepts"
+        ? "bg-blue-500 text-white"
+        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105"
+    }`}
+  >
+    {keyConceptsIsLoading ? "Loading..." : "Key Concepts"}
+  </button>
+  <button
+    onClick={handleQuizClick}
+    className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
+      selectedSection === "quiz"
+        ? "bg-blue-500 text-white"
+        : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:scale-105"
+    }`}
+  >
+    {quizIsLoading ? "Loading..." : "Take Quiz"}
+  </button>
   <button
     onClick={handleCurrentScoreClick}
     className={`px-4 py-2 font-medium border rounded-lg transition-transform duration-300 ease-in-out ${
