@@ -10,7 +10,7 @@ import { AuthLayout } from './components'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import InputURL from './pages/InputURL.jsx'
-import Dashboard from './components/Header/DashBoard.jsx'
+import Dashboard from './components/Header/Dashboard1.jsx'
 import UserHistory from './pages/UserHistory.jsx'
 import ForgetPassword from './pages/ForgetPassword.jsx'
 
