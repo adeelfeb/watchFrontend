@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
-import Dashboard from '../components/Header/DashBoard';
+import Dashboard from '../components/Header/Dashboard1';
 
 // Import images from assets folder
 import orbital from '../assets/orbital.png';
