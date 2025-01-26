@@ -88,7 +88,7 @@ export class AuthService {
                 payload, 
                 {
                     headers: { 'Content-Type': 'application/json' },
-                    withCredentials: false,
+                    withCredentials: true,
                 }
             );
 
